@@ -41,7 +41,7 @@ import com.apurv.entity.Login;
 import com.apurv.entity.Movie;
 import com.apurv.entity.Rate;
 import com.apurv.services.EmployeeService;
-@SpringBootApplication
+
 @RestController
 public class HomeController {
 	
@@ -149,7 +149,7 @@ public class HomeController {
 		    }
 	
 	 //================
-	 @Configuration
+	/* @Configuration
 	  @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 	  protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    @Override
@@ -167,5 +167,5 @@ public class HomeController {
 	    	  repository.setHeaderName("X-XSRF-TOKEN");
 	    	  return repository;
 	    	}
-	  }
+	  }*/
 }
