@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
@@ -12,7 +11,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-
 import com.apurv.entity.Average;
 import com.apurv.entity.Comment;
 import com.apurv.entity.Login;
@@ -39,56 +36,51 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public EntityManager em;
     private TransactionTemplate transactionTemplate;
    
-     
-    
-        public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
-    
+    public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
             this.transactionTemplate = transactionTemplate;
-    
-        }
+    	    }
 
-    
     public EntityManager getEm() {
 		return em;
-	}
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
+		}
 	
-	@Override
-	public List<Movie> empAll() {
+     public void setEm(EntityManager em) {
+		this.em = em;
+		}
+	
+     @Override
+     public List<Movie> empAll() {
 		TypedQuery<Movie> tq=em.createNamedQuery("Movie.findAll", Movie.class);
 		return tq.getResultList();
-	}
+		}
 	
-	@Override
-	@Transactional
-	public String addRate(Rate rate) {
-		EntityManager em1 = getEm();
+     @Override
+     @Transactional
+     public String addRate(Rate rate) {
+	   	EntityManager em1 = getEm();
 		//em1.getTransaction().begin();
-   	   em1.persist(rate);
-	   return rate.getRateId();
-	}
+   	   	em1.persist(rate);
+	   	return rate.getRateId();
+		}
 	
-	
-	@Override
-	@Transactional
-	public String deleteMovie(String movieId) {
+     @Override
+     @Transactional
+     public String deleteMovie(String movieId) {
 		Movie movie = em.find(Movie.class, movieId);
 		EntityManager em1 = getEm();
 		//em1.getTransaction().begin();
-   	    em1.remove(movie);
-	   return "true";
-	}
+   	   	 em1.remove(movie);
+	  	 return "true";
+		}
 	
-	@Override
-	@Transactional
-	public String addComment( Comment comment) {
+     @Override
+     @Transactional
+     public String addComment( Comment comment) {
 		EntityManager em1 = getEm();
 		//em1.getTransaction().begin();
-   	   em1.persist(comment);
-	   return comment.getCommentId();
-	}
+   	   	em1.persist(comment);
+	   	return comment.getCommentId();
+		}
 	
     @Override
     @Transactional
@@ -128,12 +120,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 			   			   
 		   }
 		   avg.add(a1);
-	      // a1.setTitle("");
-	       //a1.setAverage("");
-	   }
-	   
+	   }	   
    	   return avg;
-	}
+	   }
+	
     @Override
     @Transactional
     public List<Comment> getAllComments(String title) {
@@ -141,51 +131,38 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	   String qlString = "SELECT r.comment,r.userName FROM Comment r WHERE r.title = :Title";
 	  // Query q = em.createQuery(qlString);
 	   List<Comment> avg=new LinkedList<Comment>();
-	  
-		  
-		  // List<Object> result= q.getResultList();
-		   //System.out.println(result);
-		   TypedQuery<Object[]> typedQuery = em.createQuery( qlString , Object[].class);
-		   typedQuery.setParameter("Title", title);
-		   
-		   List<Object[]> results = typedQuery.getResultList();
-		   System.out.println(results);
-		   for (Object[] result : results) {
+	   TypedQuery<Object[]> typedQuery = em.createQuery( qlString , Object[].class);
+   	   typedQuery.setParameter("Title", title);
+	   List<Object[]> results = typedQuery.getResultList();
+	   System.out.println(results);
+	   for (Object[] result : results) {
 			   Comment a1=new Comment();
 			   a1.setTitle(title);
 			   a1.setComment(result[0].toString());
 			   a1.setUserName(result[1].toString());
 			   avg.add(a1);
-			  }
-		   
-		  
-	      // a1.setTitle("");
-	       //a1.setAverage("");
-	   
-	   
+	   		}
    	   return avg;
-	}
+	   }
+	
 	@Override
 	public Movie getOne(String id) {
 		// TODO Auto-generated method stub
 		Movie movie= em.find(Movie.class, id);
 		return movie;
-	}
+		}
     
 	@Override
 	public List<Login> getLogin(String id) {
 		// TODO Auto-generated method stub
-		CriteriaQuery<Login> c = em.getCriteriaBuilder().createQuery(Login.class); 
+	    CriteriaQuery<Login> c = em.getCriteriaBuilder().createQuery(Login.class); 
 	    Root<Login> from = c.from(Login.class); 
-
 	    c.select(from);
 	    c.where(em.getCriteriaBuilder().equal(from.get("userName"),id)); // <- this will add the restriction. 
-
 	    //c.orderBy(em.getCriteriaBuilder().asc(from.get("firstname"))); 
 	    return em.createQuery(c).getResultList(); 
-		//Login login= em.find(Login.class, userName);
-		//return login;
-	}
+	    }
+	
 	@Override
 	@Transactional
 	public String updateMovie(String movieId,Movie movie) throws Exception
@@ -200,24 +177,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		existingMov.setRuntime(movie.getRuntime());
 		em.merge(existingMov);
 		return "success";
-	}
+		}
+	
 	@Override
 	@Transactional
 	public String addOne(final Movie movie) throws Exception {
-		/*return (Long) transactionTemplate.execute(new TransactionCallback() {
-		    public Object doInTransaction(TransactionStatus status) {
-		      em.persist(movie);
-		      System.out.println(movie.getMovieId());
-		      return movie.getMovieId();      
-		    }
-		  });
-		*/
 		EntityManager em1 = getEm();
 		//em1.getTransaction().begin();
-    	em1.persist(movie);
-    	//em1.getTransaction().commit();
-    	return movie.getMovieId();
-	}
-	
-
+    		em1.persist(movie);
+    		//em1.getTransaction().commit();
+    		return movie.getMovieId();
+		}	
 }
