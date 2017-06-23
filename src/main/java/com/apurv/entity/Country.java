@@ -15,26 +15,28 @@ public class Country implements Serializable {
 	@Id
 	@GenericGenerator(name="customUUID", strategy="uuid2")
 	@GeneratedValue(generator="customUUID")
-private String countId;
+	private String countId;
+	private String country;
 
-private String country;
-public Country() {}
+	public Country() {}
 
-public Country(String name) {
-  this.country = name;
-}
-public String getCountId() {
-	return countId;
-}
-public void setCountId(String countId) {
-	this.countId = countId;
-}
+	public Country(String name) {
+  		this.country = name;
+		}
+	
+	public String getCountId() {
+		return countId;
+		}
+	
+	public void setCountId(String countId) {
+		this.countId = countId;
+		}
 
-public String getCountry() {
-	return country;
-}
-public void setCountry(String country) {
-	this.country = country;
-}
-
+	public String getCountry() {
+		return country;
+		}
+	
+	public void setCountry(String country) {
+		this.country = country;
+		}
 }
