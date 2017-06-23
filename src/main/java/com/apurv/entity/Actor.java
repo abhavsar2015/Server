@@ -12,30 +12,30 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table
 public class Actor implements Serializable {
-	@Id
-	@GenericGenerator(name="customUUID", strategy="uuid2")
-	@GeneratedValue(generator="customUUID")
-	private String actId;
-    
-    private String actors;
-    public Actor() {}
+   @Id
+   @GenericGenerator(name="customUUID", strategy="uuid2")
+   @GeneratedValue(generator="customUUID")
+   private String actId;
+   private String actors;
+   public Actor() {}
 
-    public Actor(String name) {
+   public Actor(String name) {
       this.actors = name;
     }
-	public String getActId() {
+	
+   public String getActId() {
 		return actId;
 	}
-	public void setActId(String actId) {
+	
+   public void setActId(String actId) {
 		this.actId = actId;
 	}
 	
-	public String getActor() {
+   public String getActor() {
 		return actors;
 	}
-	public void setActor(String actor) {
+	
+   public void setActor(String actor) {
 		this.actors = actor;
 	}
-    
-    
-}
+ }
